@@ -1,7 +1,6 @@
 USE master;
 GO
 
--- 1. Veritabanı Yoksa Oluştur
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'CEKSENET')
 BEGIN
     CREATE DATABASE CEKSENET;
@@ -11,7 +10,6 @@ GO
 USE CEKSENET;
 GO
 
--- 2. Tablo Yoksa Oluştur
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'TAKIP' AND type = 'U')
 BEGIN
     CREATE TABLE dbo.TAKIP (
@@ -27,14 +25,9 @@ BEGIN
         DURUM nvarchar(50) DEFAULT 'BEKLIYOR',
         SON_GUNCELLEME_TARHI datetime DEFAULT GETDATE()
     );
-END
-GO
 
--- 3. Örnek Veri Ekle (Tablo boşsa)
-IF NOT EXISTS (SELECT TOP 1 * FROM dbo.TAKIP)
-BEGIN
+    -- Örnek veri
     INSERT INTO dbo.TAKIP (FIRMA, KESIDE, ADRES, TEL, TARH, VALOR, TUTAR, SeriNo, DURUM)
-    VALUES 
-    ('Ornek Firma A.S.', 'Istanbul', 'Organize Sanayi', '05321002030', GETDATE(), DATEADD(day, 45, GETDATE()), 125000, 'A-885522', 'BEKLIYOR');
+    VALUES ('Deneme Firma Ltd', 'Istanbul', 'Test Adresi', '05551112233', GETDATE(), DATEADD(day, 30, GETDATE()), 50000, 'A-123456', 'BEKLIYOR');
 END
 GO

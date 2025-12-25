@@ -1,50 +1,64 @@
 @echo off
-title Cek Senet Sistemi Baslatici
-color 1F
+title Cek Senet Takip Sistemi
+color 0A
 cls
 
-echo ==================================================
-echo   CEK VE SENET TAKIP SISTEMI BASLATILIYOR
-echo ==================================================
+echo ================================================================
+echo   CEK SENET TAKIP SISTEMI BASLATILIYOR
+echo ================================================================
 echo.
 
-:: 1. Node.js Yüklü mü Kontrol Et
-node -v >nul 2>&1
-if %errorlevel% neq 0 (
+:: 1. Node.js Kontrolü
+echo [ADIM 1] Node.js versiyonu kontrol ediliyor...
+node -v
+IF %ERRORLEVEL% NEQ 0 (
     color 4F
-    echo [KRITIK HATA] Node.js bulunamadi!
-    echo Lutfen https://nodejs.org adresinden Node.js indirip kurun.
-    echo Kurulumdan sonra bilgisayari yeniden baslatmaniz gerekebilir.
+    echo.
+    echo [KRITIK HATA] Node.js bilgisayarinizda yuklu degil!
+    echo Lutfen https://nodejs.org adresinden indirip kurunuz.
     echo.
     pause
     exit
 )
 
-:: 2. Kütüphaneleri Yükle (Eğer yoksa)
+:: 2. Kütüphanelerin Yüklenmesi
+echo.
+echo [ADIM 2] Gerekli kutuphaneler kontrol ediliyor...
 if not exist "node_modules" (
-    echo [BILGI] Gerekli dosyalar yukleniyor (Bu islem bir kez yapilir)...
+    echo    - Ilk kurulum yapiliyor, dosyalar indiriliyor (Internet gerekir)...
     call npm install
-    if %errorlevel% neq 0 (
+    IF %ERRORLEVEL% NEQ 0 (
         color 4F
-        echo [HATA] Yukleme sirasinda hata olustu. Internet baglantinizi kontrol edin.
+        echo.
+        echo [HATA] Kutuphaneler yuklenirken hata olustu!
         pause
         exit
     )
+) else (
+    echo    - Kutuphaneler zaten yuklu, devam ediliyor.
 )
 
 :: 3. Uygulamayı Başlat
 echo.
-echo [BASARILI] Sistem hazir. Uygulama aciliyor...
+echo [ADIM 3] Uygulama baslatiliyor...
 echo.
-echo Tarayicidan su adrese gidin: http://localhost:5173
+echo    Eger veritabani baglantisi basarili ise tarayici acilacak.
+echo    Adres: http://localhost:5173
 echo.
-echo (Durdurmak icin bu pencereyi kapatin)
-echo --------------------------------------------------
+echo ----------------------------------------------------------------
+echo CALISIYOR... (Durdurmak icin bu pencereyi kapatin)
+echo ----------------------------------------------------------------
 
+:: Uygulamayı çalıştır
 call npm run hepsi
 
-:: Eğer hata oluşup program kapanırsa pencere açık kalsın
-color 60
+:: Eğer program çökerse buraya düşer
+color 6F
 echo.
-echo [UYARI] Program kapandi. Bir hata olusmus olabilir.
+echo ================================================================
+echo [UYARI] PROGRAM BEKLENMEDIK SEKILDE KAPANDI!
+echo ================================================================
+echo Yukaridaki hata mesajini okuyunuz.
+echo Genellikle veritabani baglantisi veya port cakismasi olabilir.
+echo.
 pause
