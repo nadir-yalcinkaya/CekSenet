@@ -31,3 +31,8 @@ BEGIN
     VALUES ('Deneme Firma Ltd', 'Istanbul', 'Test Adresi', '05551112233', GETDATE(), DATEADD(day, 30, GETDATE()), 50000, 'A-123456', 'BEKLIYOR');
 END
 GO
+
+dfgfdgf
+
+
+fdgfd
