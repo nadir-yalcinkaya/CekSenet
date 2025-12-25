@@ -1,0 +1,5 @@
+{
+  "name": "Çek/Senet Yönetim Paneli",
+  "description": "Firma yöneticileri için SQL Server entegrasyonlu (Simülasyon), Yapay Zeka destekli Çek ve Senet takip sistemi.",
+  "requestFramePermissions": []
+}
